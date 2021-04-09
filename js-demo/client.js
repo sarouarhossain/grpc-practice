@@ -9,11 +9,14 @@ const client = new todoPackage.Todo("localhost:5555", grpc.credentials.createIns
 const text = process.argv[2]
 
 client.createTodo({
-    "text" : text
+    "text": text+Math.random()
 }, (err, res) => {
-    //console.log("Server response: " + JSON.stringify(res))
+    console.log("Server response: " + JSON.stringify(res))
 })
 
-client.readTodos({}, (err,res) => {
-    console.log("Server response: " + JSON.stringify(res))
+client.readTodos({}, (err, res) => {
+    //console.log("Server response: " + JSON.stringify(res))
+    if(!res.items){
+       res.items.forEach(item =>console.log(item.text))
+    }
 })

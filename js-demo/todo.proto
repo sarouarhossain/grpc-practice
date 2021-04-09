@@ -5,6 +5,7 @@ package todoPackage;
 service Todo {
     rpc createTodo (TodoForm) returns (TodoItem);
     rpc readTodos (voidN) returns (TodoItems);
+    rpc readTodosStream (voidN) returns (stream TodoItem);
 }
 
 message voidN {}
