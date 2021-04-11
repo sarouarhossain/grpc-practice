@@ -1,0 +1,4 @@
+rootProject.name = 'grpctest'
+include 'proto'
+include 'user-service'
+
