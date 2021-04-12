@@ -22,7 +22,7 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
       - name: Change Directory
-        working-directory: ./gateway
+        run: cd gateway
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build with Gradle
