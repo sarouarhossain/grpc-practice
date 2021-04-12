@@ -2,6 +2,7 @@ package com.demo.gateway.controllers;
 
 import com.demo.gateway.models.SquareResponse;
 import com.demo.gateway.services.RestService;
+import com.demo.gateway.services.RpcServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,10 +16,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class NumberController {
-  private RestService restService;
+  private final RestService restService;
+  private final RpcServiceImpl rpcService;
 
-  NumberController(RestService restService) {
+  NumberController(RestService restService, RpcServiceImpl rpcService) {
     this.restService = restService;
+    this.rpcService = rpcService;
   }
 
   @GetMapping("/restNaive/{limit}")
@@ -33,12 +36,15 @@ public class NumberController {
   }
 
   @GetMapping("/unary/{limit}")
-  public ResponseEntity<List<SquareResponse>> getUnaryData(@PathVariable String limit) {
-    return new ResponseEntity<>(null, HttpStatus.OK);
+  public ResponseEntity<List<SquareResponse>> getUnaryData(@PathVariable Long limit) {
+    var res = rpcService.getData(limit);
+    return new ResponseEntity<>(res, HttpStatus.OK);
   }
 
   @GetMapping("/stream/{limit}")
-  public ResponseEntity<List<SquareResponse>> getStreamData(@PathVariable String limit) {
-    return new ResponseEntity<>(null, HttpStatus.OK);
+  public ResponseEntity<List<SquareResponse>> getStreamData(@PathVariable Long limit)
+      throws InterruptedException {
+    var res = rpcService.getDataStream(limit);
+    return new ResponseEntity<>(res, HttpStatus.OK);
   }
 }
