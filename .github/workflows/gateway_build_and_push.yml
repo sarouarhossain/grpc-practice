@@ -28,6 +28,7 @@ jobs:
       run: gateway/gradlew build
 
   push_to_docker:
+    runs-on: ubuntu-latest
     needs: build_job
     name: push to dockerhub
     steps:
