@@ -38,4 +38,4 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Image build and push
-      run: gateway/build_and_push.sh
+      run: pwd && cd gateway && chmod +x build_and_push.sh && ./build_and_push.sh
