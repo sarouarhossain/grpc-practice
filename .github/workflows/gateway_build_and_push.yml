@@ -24,6 +24,6 @@ jobs:
       - name: Change Directory
         run: cd gateway && pwd
       - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
+        run: chmod +x gateway/gradlew
       - name: Build with Gradle
-        run: ./gradlew build
+        run: gateway/gradlew build
