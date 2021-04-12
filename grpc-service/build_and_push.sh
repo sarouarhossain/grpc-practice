@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd gateway
+cd grpc-service
 
 chmod +x gradlew
 
