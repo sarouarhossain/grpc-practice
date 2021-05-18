@@ -3,6 +3,8 @@ package com.demo.gateway.controllers;
 import com.demo.gateway.models.SquareResponse;
 import com.demo.gateway.services.RestService;
 import com.demo.gateway.services.RpcServiceImpl;
+import java.net.URISyntaxException;
+import java.util.concurrent.CompletionStage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +29,12 @@ public class NumberController {
   @GetMapping("/rest/{limit}")
   public Flux<SquareResponse> getRestData(@PathVariable Long limit) {
     return restService.getData(limit);
+  }
+
+  @GetMapping("/rest2/{limit}")
+  public CompletionStage<List<SquareResponse>> getRestData2(@PathVariable Long limit)
+      throws URISyntaxException {
+    return restService.getDataRes(limit);
   }
 
   @GetMapping("/unary/{limit}")

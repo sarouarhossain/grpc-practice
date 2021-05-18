@@ -1,7 +1,10 @@
 package com.demo.gateway.services;
 
 import com.demo.gateway.models.SquareResponse;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
@@ -32,13 +35,45 @@ public class RestServiceImpl implements RestService {
 
     return Flux.fromStream(LongStream.range(1, limit).boxed())
         .parallel()
-        .runOn(Schedulers.boundedElastic())
         .flatMap(this::get)
         .ordered((u1, u2) -> (int) (u1.getNumber() - u2.getNumber()));
   }
 
   private Mono<SquareResponse> get(Long number) {
     return webClient.get().uri("{number}", number).retrieve().bodyToMono(SquareResponse.class);
+  }
+
+  @Override
+  public CompletionStage<List<SquareResponse>> getDataRes(Long limit) throws URISyntaxException {
+    HttpClient client = HttpClient.newHttpClient();
+    List<URI> targets = new ArrayList<>();
+    for (long key=1 ; key<=limit; key++) {
+      targets.add(new URI(API_BASE + key));
+    }
+    System.out.println("TEST: "+targets);
+    List<CompletableFuture<String>> futures =
+        targets.stream()
+            .map(
+                target -> client
+                    .sendAsync(
+                        HttpRequest.newBuilder(target).GET().build(),
+                        HttpResponse.BodyHandlers.ofString()).thenApplyAsync(HttpResponse::body))
+            .collect(Collectors.toList());
+
+    var allFutures =
+        CompletableFuture.allOf(futures.toArray(new CompletableFuture[futures.size()]));
+
+    ObjectMapper mapper = new ObjectMapper();
+    return allFutures.thenApplyAsync(
+        v -> futures.stream().map(CompletableFuture::join).map(y->{
+          try {
+            return mapper.readValue(y,SquareResponse.class);
+          } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return null;
+          }
+        }).collect(Collectors.toList()));
+
   }
 
   @Override

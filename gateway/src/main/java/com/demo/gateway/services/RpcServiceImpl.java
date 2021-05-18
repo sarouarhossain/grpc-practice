@@ -19,8 +19,9 @@ import java.util.stream.LongStream;
 public class RpcServiceImpl {
   //private static final String BASE_URL = "207.148.98.248";
   private static final String BASE_URL = "localhost";
+  private static final Integer PORT = 9090;
   private ManagedChannel channel =
-      ManagedChannelBuilder.forAddress(BASE_URL, 9091).usePlaintext().build();
+      ManagedChannelBuilder.forAddress(BASE_URL, PORT).usePlaintext().build();
 
   public List<SquareResponse> getData(Long limit) {
     NumberServiceGrpc.NumberServiceBlockingStub client = NumberServiceGrpc.newBlockingStub(channel);
