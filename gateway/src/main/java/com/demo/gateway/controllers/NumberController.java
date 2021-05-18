@@ -44,6 +44,8 @@ public class NumberController {
   @GetMapping("/stream/{limit}")
   public ResponseEntity<List<SquareResponse>> getStreamData(@PathVariable Long limit)
       throws InterruptedException {
+
+    System.out.println("Request Came11...");
     var res = rpcService.getDataStream(limit);
     return new ResponseEntity<>(res, HttpStatus.OK);
   }

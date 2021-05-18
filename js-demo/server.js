@@ -17,6 +17,7 @@ server.start();
 
 const todos = []
 let id = 100
+
 function createTodo(call, callback) {
     let todo = {
         "id": id++,
@@ -36,9 +37,8 @@ function readTodos(call, callback) {
 }
 
 function readTodosStream(call, callback) {
-    todos.forEach(function (item, index) {
+    todos.forEach(function(item, index) {
         call.write(item)
     })
     call.end();
 }
-

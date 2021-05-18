@@ -24,7 +24,7 @@ public class RpcServiceImpl {
   public List<SquareResponse> getData(Long limit) {
     NumberServiceGrpc.NumberServiceBlockingStub client = NumberServiceGrpc.newBlockingStub(channel);
     List<SquareResponse> responseList = new ArrayList<>();
-    LongStream.range(1, limit)
+    LongStream.range(1, limit + 1)
         .forEach(
             number -> {
               NumberRequest request = NumberRequest.newBuilder().setNumber(number).build();
@@ -43,6 +43,7 @@ public class RpcServiceImpl {
     List<SquareResponse> responseList = new ArrayList<>();
 
     CountDownLatch latch = new CountDownLatch(1);
+    System.out.println("Request Came222..");
 
     StreamObserver<NumberRequest> requestObserver =
         client.getSquareStream(
@@ -66,7 +67,7 @@ public class RpcServiceImpl {
               }
             });
 
-    LongStream.range(1, limit)
+    LongStream.range(1, limit + 1)
         .forEach(
             number -> {
               requestObserver.onNext(NumberRequest.newBuilder().setNumber(number).build());
@@ -74,7 +75,7 @@ public class RpcServiceImpl {
 
     requestObserver.onCompleted();
 
-    latch.await(3, TimeUnit.SECONDS);
+    latch.await(10, TimeUnit.SECONDS);
     return responseList;
   }
 }
