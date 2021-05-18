@@ -16,17 +16,17 @@ public class CalculatorServiceImpl extends CalculatorServiceGrpc.CalculatorServi
   @Override
   public void sum(SumRequest request, StreamObserver<SumResponse> responseObserver) {
     // super.sum(request, responseObserver);
-    System.out.println("In Calculator Service: " + Thread.currentThread().getName());
-    System.out.println("Object ID of Calc Service: " + this.hashCode());
-
     var res = request.getFirstNumber() + request.getSecondNumber();
+
     System.out.println(
         "First Number: "
             + request.getFirstNumber()
             + ",  Second Number: "
             + request.getSecondNumber());
     SumResponse response = SumResponse.newBuilder().setResult(res).build();
+
     System.out.println("Returning Response: " + response);
+
     responseObserver.onNext(response);
     responseObserver.onCompleted();
   }

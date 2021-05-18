@@ -17,7 +17,8 @@ import java.util.stream.LongStream;
 
 @Service
 public class RpcServiceImpl {
-  private static final String BASE_URL = "207.148.98.248";
+  //private static final String BASE_URL = "207.148.98.248";
+  private static final String BASE_URL = "localhost";
   private ManagedChannel channel =
       ManagedChannelBuilder.forAddress(BASE_URL, 9091).usePlaintext().build();
 

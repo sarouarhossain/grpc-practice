@@ -24,12 +24,6 @@ public class NumberController {
     this.rpcService = rpcService;
   }
 
-  @GetMapping("/restNaive/{limit}")
-  public ResponseEntity<List<SquareResponse>> getDataNaive(@PathVariable Long limit) {
-    var res = restService.getDataNaive(limit);
-    return new ResponseEntity<>(res, HttpStatus.OK);
-  }
-
   @GetMapping("/rest/{limit}")
   public Flux<SquareResponse> getRestData(@PathVariable Long limit) {
     return restService.getData(limit);
@@ -47,6 +41,12 @@ public class NumberController {
 
     System.out.println("Request Came11...");
     var res = rpcService.getDataStream(limit);
+    return new ResponseEntity<>(res, HttpStatus.OK);
+  }
+
+  @GetMapping("/restNaive/{limit}")
+  public ResponseEntity<List<SquareResponse>> getDataNaive(@PathVariable Long limit) {
+    var res = restService.getDataNaive(limit);
     return new ResponseEntity<>(res, HttpStatus.OK);
   }
 }

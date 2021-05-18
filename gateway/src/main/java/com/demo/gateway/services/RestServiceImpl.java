@@ -22,7 +22,9 @@ import java.util.stream.LongStream;
 
 @Service
 public class RestServiceImpl implements RestService {
-  private static final String API_BASE = "http://207.148.98.248:7775/api/square/";
+  //private static final String API_BASE = "http://207.148.98.248:7775/api/square/";
+  private static final String API_BASE = "http://localhost:7775/api/square/";
+
   private WebClient webClient = WebClient.create(API_BASE);
 
   @Override

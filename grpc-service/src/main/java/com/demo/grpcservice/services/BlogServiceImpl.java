@@ -18,41 +18,41 @@ import java.time.format.DateTimeFormatter;
 @GrpcService
 public class BlogServiceImpl extends BlogServiceGrpc.BlogServiceImplBase {
   Logger logger = LoggerFactory.getLogger(BlogServiceImpl.class);
-  private final BlogRepository blogRepository;
-  private final DateTimeFormatter formatter =
-      DateTimeFormatter.ofPattern("MM/dd/yyyy - HH:mm:ss Z");
-
-  public BlogServiceImpl(BlogRepository blogRepository) {
-    this.blogRepository = blogRepository;
-  }
+//  private final BlogRepository blogRepository;
+//  private final DateTimeFormatter formatter =
+//      DateTimeFormatter.ofPattern("MM/dd/yyyy - HH:mm:ss Z");
+//
+//  public BlogServiceImpl(BlogRepository blogRepository) {
+//    this.blogRepository = blogRepository;
+//  }
 
   @Override
   public void createBlog(
       CreateBlogRequest request, StreamObserver<CreateBlogResponse> responseObserver) {
     // super.createBlog(request, responseObserver);
     Blog blog = new Blog();
-    blog.setId(request.getBlog().getId());
+    //blog.setId(request.getBlog().getId());
     blog.setAuthorId(request.getBlog().getAuthorId());
     blog.setTitle(request.getBlog().getTitle());
     blog.setContent(request.getBlog().getContent());
     logger.info("Before Save: " + new Gson().toJson(blog));
 
-    var saved = blogRepository.save(blog);
-    logger.info("Saved Blog: " + new Gson().toJson(saved));
-    CreateBlogResponse response =
-        CreateBlogResponse.newBuilder()
-            .setBlog(
-                com.demo.blog.Blog.newBuilder()
-                    .setId(blog.getId())
-                    .setAuthorId(blog.getAuthorId())
-                    .setTitle(blog.getTitle())
-                    .setContent(blog.getContent())
-                    .setCreatedAt(saved.getCreatedAt().format(formatter))
-                    .build())
-            .build();
-    logger.info("Saved Blog: " + new Gson().toJson(response));
-
-    responseObserver.onNext(response);
-    responseObserver.onCompleted();
+//    var saved = blogRepository.save(blog);
+//    logger.info("Saved Blog: " + new Gson().toJson(saved));
+//    CreateBlogResponse response =
+//        CreateBlogResponse.newBuilder()
+//            .setBlog(
+//                com.demo.blog.Blog.newBuilder()
+//                    .setId(blog.getId())
+//                    .setAuthorId(blog.getAuthorId())
+//                    .setTitle(blog.getTitle())
+//                    .setContent(blog.getContent())
+//                    .setCreatedAt(saved.getCreatedAt().format(formatter))
+//                    .build())
+//            .build();
+//    logger.info("Saved Blog: " + new Gson().toJson(response));
+//
+//    responseObserver.onNext(response);
+//    responseObserver.onCompleted();
   }
 }

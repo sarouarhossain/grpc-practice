@@ -42,7 +42,7 @@ protobuf {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    //implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'net.devh:grpc-server-spring-boot-starter:2.11.0.RELEASE'
     implementation 'io.grpc:grpc-netty-shaded:1.37.0'
@@ -51,7 +51,7 @@ dependencies {
     compileOnly 'org.apache.tomcat:annotations-api:6.0.53' // necessary for Java 9+
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'mysql:mysql-connector-java'
+    //runtimeOnly 'mysql:mysql-connector-java'
     annotationProcessor 'org.projectlombok:lombok'
     implementation 'com.google.code.gson:gson:2.8.6'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
